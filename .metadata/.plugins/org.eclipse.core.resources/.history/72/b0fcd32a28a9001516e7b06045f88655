@@ -1,0 +1,31 @@
+import java.util.ArrayList;
+
+public class Lexer {
+	
+	static Input input = new Input("test.ink");
+	private static ArrayList<Object> tokens = new ArrayList<Object>();
+	private static char[] symbols = {'(', ')', '{', '}', '=', '+', '-', '*', '/'};
+	
+	public static void main (String[] args) {
+		initialLex(input.readFile());
+		System.out.println(input.readFile());
+	}
+	
+	private static ArrayList<Character> initialLex (String input) {
+
+		char[] toklist = input.toCharArray();
+		ArrayList<Character> toks = new ArrayList<Character>();
+		
+		for (char tok : toklist) {
+			if (tok != ' ') {
+				toks.add(tok);
+			} else {
+				toks.clear();
+			}
+		}
+
+		return toks;
+	}
+	
+	public static ArrayList<Object>
+}
