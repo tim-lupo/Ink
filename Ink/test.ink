@@ -1,4 +1,4 @@
-yoooo
-dank memesklhfnd
-ass
-memes
+var memes = "hello"
+func testfunc (bob) {
+	memes = "bye"
+}

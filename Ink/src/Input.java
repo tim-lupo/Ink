@@ -27,13 +27,13 @@ public class Input {
         }
         
         catch (FileNotFoundException ex) {
-            System.out.println("Unable to open file '" + fileName + "'");                
+            System.out.println("INK ERROR: unable to open file '" + fileName + "'");                
         } 
         catch (IOException ex) {
-            System.out.println("Error reading file '" + fileName + "'");
+            System.out.println("INK ERROR: error reading file '" + fileName + "'");
         } 
         catch (NullPointerException ex) {
-        	System.out.println("No filename provided!");
+        	System.out.println("INK ERROR: no filename provided");
         }
         
         return input;

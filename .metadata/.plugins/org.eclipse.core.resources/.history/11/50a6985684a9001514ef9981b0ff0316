@@ -1,0 +1,8 @@
+public class Parser {
+	
+	private static char[] symbols = {'(', ')', '{', '}', '=', '+', '-', '*', '/'};
+	
+	public static void main (String[] args) {
+		
+	}
+}

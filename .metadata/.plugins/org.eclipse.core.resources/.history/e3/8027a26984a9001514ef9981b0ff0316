@@ -1,0 +1,9 @@
+public class Parser {
+	
+	private static char[] symbols = {'(', ')', '{', '}', '=', '+', '-', '*', '/'};
+	private ArrayList<String> tokens = new Input("test.ink").lex();
+	
+	public static void main (String[] args) {
+		
+	}
+}

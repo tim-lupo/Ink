@@ -1,4 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;Ink/test.txt&apos; to &apos;test.ink&apos;" description="Rename resource &apos;test.txt&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="test.txt" name="test.ink" stamp="1450644886083" updateReferences="true"/>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;Ink/test.txt&apos; to &apos;test.ink&apos;" description="Rename resource &apos;test.txt&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="test.txt" name="test.ink" stamp="1450644886083" updateReferences="true"/>&#x0A;<refactoring accessors="true" comment="Delete element from project &apos;Ink&apos;&#x0A;- Original project: &apos;Ink&apos;&#x0A;- Original element: &apos;Math.java&apos;" description="Delete element" element1="/src&lt;{Math.java" elements="1" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1450972512331" subPackages="false" version="1.0"/>
 </session>

@@ -1,0 +1,9 @@
+public class Parser {
+	
+	private static char[] symbols = {'(', ')', '{', '}', '=', '+', '-', '*', '/'};
+	private tokens = new Input("test.ink");
+	
+	public static void main (String[] args) {
+		
+	}
+}

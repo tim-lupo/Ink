@@ -1,0 +1,27 @@
+import java.util.ArrayList;
+
+public class Parser {
+	
+	private static char[] symbols = {'(', ')', '{', '}', '=', '+', '-', '*', '/'};
+	private static ArrayList<String> tokens = new Lexer().lex(new Input("test.ink").readFile());
+	
+	public static void main (String[] args) {
+		//System.out.println(tokens);
+		parse(tokens);
+	}
+	
+	public static void parse (ArrayList<String> tokens) {
+		int i = 0; //position of index
+		for (String tok : tokens) { //loop through the tokens
+			if (tok.compareTo("var") == 0) { //if it finds a var declaration
+				if ((tokens.get(i+2)).compareTo("=") == 0) {
+					Variable var = new Variable(tokens.get(i+1), tokens.get(i+3));
+					System.out.println(var.getName());
+				} else {
+					System.out.println("INK ERROR: invalid variable declaration (no '=' found)");;
+				}
+			}
+			i++;
+		}
+	}
+}

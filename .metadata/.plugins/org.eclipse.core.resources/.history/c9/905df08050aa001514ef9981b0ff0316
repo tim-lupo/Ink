@@ -1,0 +1,6 @@
+
+public class Variable {
+	
+	private String name;
+	private Object value;
+}

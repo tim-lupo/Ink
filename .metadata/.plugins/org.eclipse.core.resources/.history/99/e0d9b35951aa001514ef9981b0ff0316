@@ -1,0 +1,20 @@
+import java.util.ArrayList;
+
+public class Parser {
+	
+	private static char[] symbols = {'(', ')', '{', '}', '=', '+', '-', '*', '/'};
+	private static ArrayList<String> tokens = new Lexer().lex(new Input("test.ink").readFile());
+	
+	public static void main (String[] args) {
+		//System.out.println(tokens);
+	}
+	
+	public static void parse (ArrayList<String> tokens) {
+		int i = 0; //position of
+		for (String tok : tokens) { //loop through the tokens
+			if (tok.compareTo("var") == 0) { //if it finds a var declaration
+				
+			}
+		}
+	}
+}
