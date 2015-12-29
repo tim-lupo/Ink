@@ -1,0 +1,4 @@
+var memes="hello"
+func testfunc (bob, john, cock) {
+	memes = "bye faggot"
+}

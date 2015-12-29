@@ -1,4 +1,5 @@
 var memes = "hello"
-func testfunc (bob) {
-	memes = "bye"
+func testfunc (bob, john, connor) {
+	memes = "bye john"
+	nums = (1+2)/3
 }

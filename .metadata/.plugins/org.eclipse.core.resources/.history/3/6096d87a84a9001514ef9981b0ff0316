@@ -1,9 +1,0 @@
-public class Parser {
-	
-	private static char[] symbols = {'(', ')', '{', '}', '=', '+', '-', '*', '/'};
-	private ArrayList<String> tokens = new Lexer().lex(new Input());
-	
-	public static void main (String[] args) {
-		
-	}
-}

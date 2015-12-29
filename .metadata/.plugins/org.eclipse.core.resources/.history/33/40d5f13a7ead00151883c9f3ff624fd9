@@ -1,0 +1,19 @@
+import java.util.ArrayList;
+
+public class Function {
+	
+	private String name;
+	public ArrayList<Object> parameterValue;
+	public ArrayList<String> contents;
+	
+	public Function(String name, ArrayList<Object> parameterValue, ArrayList<String> contents) {
+		super();
+		this.name = name;
+		this.parameterValue = parameterValue;
+		this.contents = contents;
+	}
+
+	public String getName() {
+		return name;
+	}
+}

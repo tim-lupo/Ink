@@ -3,13 +3,15 @@ import java.util.ArrayList;
 public class Function {
 	
 	private String name;
-	public ArrayList<Object> parameters;
+	public ArrayList<String> parameterVar;
+	public ArrayList<Object> parameterValue;
 	public ArrayList<String> contents;
 	
-	public Function(String name, ArrayList<Object> parameters, ArrayList<String> contents) {
+	public Function(String name, ArrayList<String> parameterVar, ArrayList<Object> parameterValue, ArrayList<String> contents) {
 		super();
 		this.name = name;
-		this.parameters = parameters;
+		this.parameterVar = parameterVar;
+		this.parameterValue = parameterValue;
 		this.contents = contents;
 	}
 
