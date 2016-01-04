@@ -3,16 +3,14 @@ import java.util.ArrayList;
 public class Function {
 	
 	private String name;
-	public ArrayList<String> parameterVar;
-	public ArrayList<Object> parameterValue;
-	public ArrayList<String> contents;
+	private String initialParam;
+	private ArrayList<String> initialContents;
 	
-	public Function(String name, ArrayList<String> parameterVar, ArrayList<Object> parameterValue, ArrayList<String> contents) {
+	public Function(String name, String initialParam, ArrayList<String> contents) {
 		super();
 		this.name = name;
-		this.parameterVar = parameterVar;
-		this.parameterValue = parameterValue;
-		this.contents = contents;
+		this.initialParam = initialParam;
+		this.initialContents = contents;
 	}
 
 	public String getName() {

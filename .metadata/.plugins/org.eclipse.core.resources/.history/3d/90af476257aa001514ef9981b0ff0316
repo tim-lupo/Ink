@@ -1,8 +1,0 @@
-import java.util.ArrayList;
-
-public class Function {
-	
-	private String name;
-	private ArrayList<Object> parameters;
-	private ArrayList<String> contents;
-}

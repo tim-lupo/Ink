@@ -5,6 +5,7 @@ public class Parser {
 	private static char[] symbols = {'(', ')', '{', '}', '=', '+', '-', '*', '/', '"', '\''};
 	private static ArrayList<String> tokens = new Lexer().lex(new Input("test.ink").readFile());
 	private static ArrayList<Variable> vars = new ArrayList<Variable>();
+	private static ArrayList<Function> funcs = new ArrayList<Function>();
 	
 	public static void main (String[] args) {
 		//System.out.println(tokens);
@@ -14,21 +15,30 @@ public class Parser {
 	public static void parse (ArrayList<String> tokens) {
 		int i = 0; //position of index
 		for (String tok : tokens) { //loop through the tokens
-			if (tok.compareTo("var") == 0) { //if it finds a var declaration
+			if (tok.compareTo("<EOL>") == 0) { //if its the end of the line
+				//System.out.println("end of line");
+			} else if (tok.compareTo("var") == 0) { //if it finds a var declaration
 				if ((isName(tokens.get(i+1)) == true) && (tokens.get(i+2).compareTo("=") == 0)) {
 					Variable var = new Variable(tokens.get(i+1), tokens.get(i+3));
 					vars.add(var);
 				} else {
 					System.out.println("INK ERROR: invalid variable declaration");;
 				}
-			} else if (tok.compareTo("func") == 0) {
-				if ((isName(tokens.get(i+1)) == true) && (tokens.get(i+3).compareTo("{") == 0) && (isParameter(tokens.get(i+2)) == true)) {
-					System.out.println(getParameterVars(tokens.get(i+2)));
-					System.out.println("valid func found");
-				}
-				else {
+			} else if (tok.compareTo("func") == 0) { //if it finds a func declaration
+				if ((isName(tokens.get(i+1)) == true) && (isParameter(tokens.get(i+2)) == true) && (tokens.get(i+3).compareTo("{") == 0)) {
+					//Collect the arguments inside of the function
+					ArrayList<String> contents = new ArrayList<String>();
+					boolean isArg = true;
+					for (int n=i+4; isArg == true; n++) {
+						if (tokens.get(n).compareTo("}") == 0) { isArg = false; break; }
+					}
+					Function f = new Function(tokens.get(i+1), tokens.get(i+2), contents);
+					funcs.add(f);
+				} else {
 					System.out.println("INK ERROR: invalid function declaration");
 				}
+			} else if (tok.compareTo("print") == 0) {
+				System.out.println("dicks");
 			}
 			i++;
 		}
