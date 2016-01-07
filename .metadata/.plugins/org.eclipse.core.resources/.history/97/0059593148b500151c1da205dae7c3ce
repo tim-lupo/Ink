@@ -1,0 +1,7 @@
+var memes="hello"
+VaR dicks = "dicks" + 3
+print(dicks)
+func testfunc (bob, john, connor){
+	memes = "bye john"
+	nums = (1 + 2) /3
+}

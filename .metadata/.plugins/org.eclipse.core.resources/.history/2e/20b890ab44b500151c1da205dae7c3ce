@@ -1,0 +1,19 @@
+public class Value {
+	
+	private static Object input;
+
+	public Value(Object input) {
+		super();
+		this.input = input;
+	}
+	
+	public static void main (String[] args) {
+		input = "dicks" + 3;
+		sortValue(input);
+	}
+	
+	private static void sortValue(Object val) {
+		System.out.println(val);
+	}
+	
+}

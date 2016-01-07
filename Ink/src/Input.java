@@ -9,7 +9,7 @@ public class Input {
 		this.fileName = fileName;
 	}
 	
-	public static String readFile() {
+	public String readFile() {
 		
 		String line = null;
 		String input = null;

@@ -1,0 +1,22 @@
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
+public class Value {
+	
+	private Object input;
+
+	public Value(Object input) {
+		super();
+		this.input = input;
+	}
+	
+	/*public static void main (String[] args) {
+		input = "dicks" + 3;
+		sortValue(input);
+	}*/
+	
+	private Object evaluate
+	}
+	
+}

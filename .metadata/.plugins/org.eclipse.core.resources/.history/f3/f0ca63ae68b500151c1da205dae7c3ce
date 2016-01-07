@@ -1,0 +1,10 @@
+import javax.script.ScriptException;
+
+public class Driver {
+	
+	public Parser p = new Parser(new Lexer(new Input("test.ink").readFile()).lex());
+	
+	public static void main (String[] args) throws ScriptException {
+		
+	}
+}

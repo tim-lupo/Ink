@@ -1,0 +1,30 @@
+import javax.script.ScriptException;
+
+public class Variable {
+	
+	private String name;
+	private Object value;
+	
+	public Variable(String name, Object value) {
+		super();
+		this.name = name;
+		this.value = value;
+		System.out.println(value);
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getValue() throws ScriptException {
+		Value val = new Value();
+		System.out.println(new Lexer().lex(value.toString()));
+		//Object obj = val.evaluate(value.toString());
+		String str = value.toString();
+		return str;
+	}
+
+	public void setValue(Object value) {
+		this.value = value;
+	}
+}

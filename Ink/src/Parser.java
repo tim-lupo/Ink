@@ -1,30 +1,33 @@
 import java.util.ArrayList;
 
+import javax.script.ScriptException;
+
 public class Parser {
 	
-	private static char[] symbols = {'(', ')', '{', '}', '=', '+', '-', '*', '/', '"', '\''};
-	private static ArrayList<String> tokens = new Lexer().lex(new Input("test.ink").readFile());
-	private static ArrayList<Variable> vars = new ArrayList<Variable>();
-	private static ArrayList<Function> funcs = new ArrayList<Function>();
+	private char[] symbols = {'(', ')', '{', '}', '=', '+', '-', '*', '/', '"', '\''};
+	private ArrayList<String> tokens;
+	private ArrayList<Variable> vars = new ArrayList<Variable>();
+	private ArrayList<Function> funcs = new ArrayList<Function>();
 	
-	public static void main (String[] args) {
-		//System.out.println(tokens);
+	public Parser(ArrayList<String> tokens) throws ScriptException {
+		super();
+		this.tokens = tokens;
 		parse(tokens);
 	}
-	
-	public static void parse (ArrayList<String> tokens) {
+
+	public void parse (ArrayList<String> tokens) throws ScriptException {
 		int i = 0; //position of index
 		for (String tok : tokens) { //loop through the tokens
 			if (tok.compareTo("<EOL>") == 0) { //if its the end of the line
 				//System.out.println("end of line");
-			} else if (tok.compareTo("var") == 0) { //if it finds a var declaration
+			} else if (tok.toLowerCase().compareTo("var") == 0) { //if it finds a var declaration
 				if ((isName(tokens.get(i+1)) == true) && (tokens.get(i+2).compareTo("=") == 0)) {
 					Variable var = new Variable(tokens.get(i+1), tokens.get(i+3));
 					vars.add(var);
 				} else {
 					System.out.println("INK ERROR: invalid variable declaration");;
 				}
-			} else if (tok.compareTo("func") == 0) { //if it finds a func declaration
+			} else if (tok.toLowerCase().compareTo("func") == 0) { //if it finds a func declaration
 				if ((isName(tokens.get(i+1)) == true) && (isParameter(tokens.get(i+2)) == true) && (tokens.get(i+3).compareTo("{") == 0)) {
 					//Collect the arguments inside of the function
 					ArrayList<String> contents = new ArrayList<String>();
@@ -38,38 +41,52 @@ public class Parser {
 					System.out.println("INK ERROR: invalid function declaration");
 				}
 			} else if (tok.compareTo("print") == 0) {
-				System.out.println("dicks");
+				String value = tokens.get(i+1).substring(1, tokens.get(i+1).length()-1);
+				for (final Variable var : vars) {
+		            if (var.getName().equals(value)) {
+		                var.setValue(reparseVar(var.getValue()+"~"));
+		                System.out.println(var.evalValue());
+		            }
+				}
 			}
 			i++;
 		}
 	}
 	
 	//Check if valid name (no invalid characters in name)
-	private static boolean isName (String value) {
+	private boolean isName (String value) {
 		char[] toks = value.toCharArray();
-		boolean valid = true;
 		for (char tok : toks) {
 			for (char symbol : symbols) {
-				if (tok == symbol) {
-					valid = false;
+				if (tok == symbol || (Character.isDigit(toks[0])) == true) {
+					return false;
 				}
 			}
 		}
-		return valid;
+		return true;
+	}
+	
+	//Check if variable
+	private boolean isVariable (String name) {
+		for (final Variable var : vars) {
+            if (var.getName().equals(name)) {
+                return true;
+            }
+		}
+		return false;
 	}
 	
 	//Check if valid parameter list
-	private static boolean isParameter(String value) {
+	private boolean isParameter(String value) {
 		char[] toks = value.toCharArray();
-		boolean valid = true;
 		if (toks[0] != '(' || toks[toks.length-1] != ')') {
-			valid = false;
+			return false;
 		}
-		return valid;
+		return true;
 	}
 	
 	//Parse parameter list
-	private static ArrayList<String> getParameterVars(String value) {
+	private ArrayList<String> getParameterVars(String value) {
 		ArrayList<String> vars = new ArrayList<String>();
 		char[] toklist = value.toCharArray();
 		String toks = "";
@@ -87,5 +104,37 @@ public class Parser {
 			}
 		}
 		return vars;
+	}
+	
+	public String reparseVar(String value) throws ScriptException {
+		//loop through lexed answer, replace all variables with their value, reconcatinate and evaluate
+		char[] toklist = value.toString().toCharArray();
+		ArrayList<String> tokens = new ArrayList<String>();
+		String toks = "";
+		for (char tok : toklist) {
+			if (tok == '+' || tok == '-' || tok == '/' || tok == '*') {
+				tokens.add(toks.replace(" ", ""));
+				toks = "";
+				toks += tok;
+				tokens.add(toks.replace(" ", ""));
+				toks = "";
+			} else if (tok == '~') {
+				if (toks != "") { tokens.add(toks.replace(" ", "")); toks = ""; }
+			} else {
+				toks += tok;
+			}
+		}
+		for (String tok : tokens) {
+			for (Variable var : vars) {
+				if (tokens.contains(var.getName())) {
+					tokens.set(tokens.indexOf(var.getName()), (String) var.getValue());
+				}
+			}
+		}
+		String reparsed = "";
+		for (String tok : tokens) {
+			reparsed += tok;
+		}
+		return reparsed;
 	}
 }

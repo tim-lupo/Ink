@@ -2,13 +2,16 @@ import java.util.ArrayList;
 
 public class Lexer {
 	
-	public static void main (String[] args) {
-		System.out.println(lex(new Input("test.ink").readFile()));
-	}
+	private String code;
 	
-	public static ArrayList<String> lex (String input) {
+	public Lexer(String code) {
+		super();
+		this.code = code;
+	}
 
-		char[] toklist = input.toCharArray();
+	public ArrayList<String> lex() {
+
+		char[] toklist = code.toCharArray();
 		ArrayList<String> tokens = new ArrayList<String>();
 		String toks = "";
 		boolean isPara = false;

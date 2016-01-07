@@ -1,0 +1,4 @@
+var hi = 4
+var wassup = 6
+print(hi+7)
+print(wassup)

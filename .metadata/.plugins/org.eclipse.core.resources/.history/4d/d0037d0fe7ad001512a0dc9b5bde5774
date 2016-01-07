@@ -1,5 +1,0 @@
-var memes = "hello"
-func testfunc (bob, john, connor) {
-	memes = "bye john"
-	dicks = (1+2)/3
-}
