@@ -33,8 +33,6 @@ public class Lexer {
 				numBracket += 1;
 			} else if (tok == '}') {
 				numBracket -= 1;
-			} if (tok == '}' && numBracket<1) {
-				isBracket = false;
 			}
 			
 			if (isBracket == true) {
@@ -77,6 +75,12 @@ public class Lexer {
 			} else {	
 				if (toks != "") { tokens.add(toks); }
 				toks = "";
+			}
+			
+			if (tok == '}' && numBracket<1) {
+				isBracket = false;
+				tokens.add(toks);
+				toks="";
 			}
 		}
 		return tokens;

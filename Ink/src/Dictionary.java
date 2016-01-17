@@ -178,8 +178,13 @@ public class Dictionary {
 		            value = eval(reparseVar(tokens.get(i+1)+"~"));
 		            if (value.compareTo("true") == 0) {
 		            	new Parser(new Lexer().lex(tokens.get(i+2).substring(1, tokens.get(i+2).length()-2)));
-					} else if (value.compareTo("false") == 0) {} 
-					else { System.out.println("INK ERROR: invalid if statement (cannot compare " + value + ")"); }
+					} else if (value.compareTo("false") == 0) {
+						for (int n=i; n<tokens.size(); n++) {
+							if (tokens.get(n).toLowerCase().compareTo("else") == 0) {
+								new Parser(new Lexer().lex(tokens.get(n+1).substring(1, tokens.get(n+1).length()-1)));
+							}
+						}
+					} else { System.out.println("INK ERROR: invalid if statement (cannot compare " + value + ")"); }
 				} catch (ScriptException se) {
 					System.out.println("INK ERROR: invalid if statement");
 					System.out.println("\tCannot compute: " + tokens.get(i+1));
