@@ -1,0 +1,35 @@
+import java.util.ArrayList;
+
+public class Function {
+	
+	private String name;
+	private ArrayList<String> parameters;
+	private String content;
+	private Dictionary dic;
+	
+	public Function(String name, String param, String content) {
+		super();
+		this.name = name;
+		this.parameters = getParameterVars(param.substring(1, param.length()-1)+"~");
+		this.content = content;
+	}
+
+	public String getName() {
+		return name;
+	}
+	
+	//Parse parameter list
+	private ArrayList<String> getParameterVars(String value) {
+		ArrayList<String> params = new ArrayList<String>();
+		char[] toklist = value.toCharArray();
+		for (char tok : toklist) {
+			System.out.println(params);
+		}
+		System.out.println("PARAMS: " + params);
+		return params;
+	}
+	
+	public String toString() {
+		return "Function: Name=" + name + " | Parameters=" + parameters;
+	}
+}

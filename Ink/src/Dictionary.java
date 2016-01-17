@@ -62,12 +62,6 @@ public class Dictionary {
 			if (var.getName().compareTo(value.substring(0, value.length()-1)) == 0) {
 				value = var.getValue().toString()+"~";
 			}
-		} for (Function func : funcs) {
-			if (func.getName().compareTo(value.substring(0, value.length()-1)) == 0) {
-				System.out.println(func);
-				//value = func.getValue().toString()+"~";
-				System.out.println(func.getValue());
-			}
 		}
 		boolean hasVar = true;
 		ArrayList<String> tokens = relexVar(value);
@@ -124,7 +118,10 @@ public class Dictionary {
 		for (String tok : tokens) {
 			reparsed += tok;
 		}
+<<<<<<< HEAD
 		//System.out.println(reparsed);
+=======
+>>>>>>> parent of 54fa6ba... Added Return to Function
 		return reparsed;
 	}
 	
@@ -199,27 +196,10 @@ public class Dictionary {
 				} else {
 					System.out.println("INK ERROR: invalid variable declaration");
 				}
-			} else if (isVariable(tok)) {
-				if ((tokens.get(i-1).compareTo("<EOL>") == 0) && (findVariable(tok)>=0) && (tokens.get(i+1).compareTo("=")) == 0) {
-					vars.get(findVariable(tok)).setValue(tokens.get(i+2));
-				}
-			} else if (isFunction(tok)) {
-				if ((tokens.get(i-1).compareTo("<EOL>") == 0) && (findFunction(tok)>=0)) {
-					Function func = funcs.get(findFunction(tok));
-					func.setParam(tokens.get(i+1)+"~");
-					func.callFunc(func.getContent());
-				}
 			} else if (tok.toLowerCase().compareTo("print") == 0) { //if it finds a print declaration
 				String value = tokens.get(i+1);
 				try {
-					if (findFunction(tokens.get(i+1))>=0) {
-	            		Function func = funcs.get(findFunction(tokens.get(i+1)));
-						func.setParam(tokens.get(i+2)+"~");
-						func.callFunc(func.getContent());
-						System.out.print(eval(reparseVar(func.getValue()+"~")));
-	            	} else {	
-	            		System.out.print(eval(reparseVar(value+"~")));
-	            	}
+		            System.out.print(eval(reparseVar(value+"~")));
 				} catch (ScriptException se) {
 					System.out.println("INK ERROR: invalid print statement");
 					System.out.println("\tCannot compute: " + tokens.get(i+1));
@@ -229,8 +209,12 @@ public class Dictionary {
 				try {
 		            System.out.println(eval(reparseVar(value+"~")));
 				} catch (ScriptException se) {
-					System.out.println("INK ERROR: invalid println statement");
+					System.out.println("INK ERROR: invalid print statement");
 					System.out.println("\tCannot compute: " + tokens.get(i+1));
+				}
+			} else if ((isVariable(tok))) {
+				if ((tokens.get(i-1).compareTo("<EOL>") == 0) && (findVariable(tok)>=0)) {
+					vars.get(findVariable(tok)).setValue(tokens.get(i+2));
 				}
 			} else if (tok.toLowerCase().compareTo("if") == 0 && (tokens.get(i-1).compareTo("else")) != 0) {
 				String value = "";
@@ -257,10 +241,6 @@ public class Dictionary {
 					System.out.println("INK ERROR: invalid if statement");
 					System.out.println("\tCannot compute: " + tokens.get(i+1));
 				}
-			} else if (tok.toLowerCase().compareTo("return") == 0) {
-				String funcName = tokens.get(tokens.size()-2);
-				Function func = funcs.get(findFunction(funcName.substring(1, funcName.length()-1)));
-				func.setValue(tokens.get(i+1));
 			}
 			i++;
 		}

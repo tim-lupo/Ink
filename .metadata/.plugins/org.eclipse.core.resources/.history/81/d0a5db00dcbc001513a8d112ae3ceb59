@@ -1,0 +1,6 @@
+var hey = 2
+var bob = "hi"
+
+func hai(joe, mary) {
+	print(hey + bob)
+}

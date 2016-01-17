@@ -11,7 +11,7 @@ public class Variable {
 	public Variable(String name, Object value) {
 		super();
 		this.name = name;
-		setValue(value);
+		this.value = value;
 	}
 
 	public String getName() {

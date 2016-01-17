@@ -1,0 +1,6 @@
+var memes = "hi"
+if memes=="hi" {
+	var text = "hello"
+	print("hello")
+}
+print memes

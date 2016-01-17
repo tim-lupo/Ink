@@ -5,6 +5,11 @@ public class Driver {
 	/*
 	 * TODO:
 	 * -Add for/while
+<<<<<<< HEAD
+=======
+	 * -Arrays
+	 * -Add returning on function
+>>>>>>> parent of 54fa6ba... Added Return to Function
 	 * 
 	 * BUGS:
 	 * -cant call function until its declared

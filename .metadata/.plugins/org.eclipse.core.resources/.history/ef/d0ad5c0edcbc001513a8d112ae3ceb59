@@ -1,0 +1,6 @@
+var num1 = 3
+var num5 = 4
+
+func hai(joe, mary) {
+	print(2 + 1)
+}

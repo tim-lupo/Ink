@@ -1,0 +1,6 @@
+var num1 = 3
+var num2 = 1
+if (num1>num2) {
+	//println("hello")
+	print(num1+num2)
+}

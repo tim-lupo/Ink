@@ -1,0 +1,5 @@
+var memes = "hi"
+if 3>2 {
+	print("hello")
+}
+print (memes)

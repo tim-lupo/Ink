@@ -1,0 +1,9 @@
+var num1 = 'hi'
+num1 = 4
+var num2= 8
+
+func hai(joe, mary) {
+	if num2>num1
+}
+
+hai(num,2)

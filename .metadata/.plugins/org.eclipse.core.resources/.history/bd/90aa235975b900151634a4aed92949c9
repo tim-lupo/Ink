@@ -1,0 +1,26 @@
+import java.util.ArrayList;
+import javax.script.ScriptException;
+
+public class Variable {
+	
+	private String name;
+	private Object value;
+	
+	public Variable(String name, Object value) throws ScriptException {
+		super();
+		this.name = name;
+		this.value = evalValue(value);
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Object getValue() {
+		return value;
+	}
+
+	public void setValue(Object value) {
+		this.value = evalValue(value);
+	}
+}

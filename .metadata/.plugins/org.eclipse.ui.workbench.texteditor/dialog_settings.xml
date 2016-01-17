@@ -2,9 +2,15 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="265" key="DIALOG_WIDTH"/>
+<<<<<<< HEAD
 		<item value="181" key="DIALOG_Y_ORIGIN"/>
 		<item value="399" key="DIALOG_HEIGHT"/>
 		<item value="1128" key="DIALOG_X_ORIGIN"/>
+=======
+		<item value="135" key="DIALOG_Y_ORIGIN"/>
+		<item value="399" key="DIALOG_HEIGHT"/>
+		<item value="588" key="DIALOG_X_ORIGIN"/>
+>>>>>>> parent of 54fa6ba... Added Return to Function
 		<item value="1|.SF NS Text|11.0|0|COCOA|1|.SFNSText-Regular" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
@@ -15,6 +21,7 @@
 		<item value="false" key="wholeword"/>
 		<item value="System.out.println" key="selection"/>
 		<list key="findhistory">
+<<<<<<< HEAD
 			<item value="system.out.println"/>
 			<item value="syso"/>
 			<item value="tostring"/>
@@ -28,6 +35,18 @@
 			<item value=""/>
 			<item value="tokens.add(toks.replaceAll(&quot; &quot;, &quot;&quot;));"/>
 			<item value="tokens.add(toks."/>
+=======
+			<item value="eval"/>
+			<item value="catch"/>
+			<item value="setvalue"/>
+			<item value="system.out"/>
+			<item value="system"/>
+			<item value="static"/>
+			<item value="ismath"/>
+			<item value="end of line"/>
+		</list>
+		<list key="replacehistory">
+>>>>>>> parent of 54fa6ba... Added Return to Function
 		</list>
 	</section>
 </section>

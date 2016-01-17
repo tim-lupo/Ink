@@ -1,0 +1,76 @@
+import java.util.ArrayList;
+
+public class Lexer {
+	
+	public Lexer() {
+		super();
+	}
+
+	public ArrayList<String> lex(String code) {
+		
+		char[] toklist = code.toCharArray();
+		ArrayList<String> tokens = new ArrayList<String>();
+		String toks = "";
+		boolean isPara = false;
+		boolean isQuot = false;
+		boolean isMath = false;
+		boolean isBracket = false;
+		
+		for (int i=0; i<toklist.length; i++) {
+			char tok = toklist[i];
+			if (tok == '(') {
+				isPara = true;
+			} else if (tok == ')') {
+				isPara = false;
+			} else if (tok == '"') {
+				if (isQuot == false) { isQuot = true; }
+				else { isQuot = false; }
+			} if (tok == '{') {
+				if (toks != "") { tokens.add(toks); toks = ""; }
+				toks += tok;
+				isBracket = true;
+			} else if (tok == '}') {
+				isBracket = false;
+			}
+			
+			if ((tok == '=')) { 
+				if (toklist[i+1]=='=' || toklist[i-1]=='=') {
+					toks += tok;
+				} else if (toks == "") {
+					tokens.add(String.valueOf(tok));
+					toks = "";
+				} else {
+					tokens.add(toks);
+					tokens.add(String.valueOf(tok));
+					toks = "";
+				}
+				isMath = true;
+			} else if (tok == '~') {
+				isMath = false;
+				if (toks != "") { tokens.add(toks); toks = ""; }
+				tokens.add("<EOL>");
+			} else if ((tok == '(')) {
+				boolean allPara = true;
+				for (int k=0; i<toks.toCharArray().length; k++) {
+					if (toks.toCharArray()[k] != '(') {
+						allPara = false;
+					}
+				}
+				if (toks != "" && allPara == false) {
+					tokens.add(toks);
+					toks = "";
+					toks += tok;
+				} else {
+					toks += tok;
+				}
+			} else if ((tok != ' ') || (isPara == true) || (isQuot == true) || (isMath == true) || (isBracket == true)) {
+				toks += tok;
+			}  else {	
+				if (toks != "") { tokens.add(toks); }
+				toks = "";
+			}
+		}
+		System.out.println(tokens);
+		return tokens;
+	}
+}
