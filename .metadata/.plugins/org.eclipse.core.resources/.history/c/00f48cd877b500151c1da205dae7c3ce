@@ -1,4 +1,0 @@
-var hi = 4
-var wassup = 6
-print(hi)
-print(hi*wassup)

@@ -1,0 +1,15 @@
+import javax.script.ScriptException;
+
+public class Driver {
+	
+	/*
+	 * TODO:
+	 * -Add if/else
+	 * -Add for/while
+	 * -Arrays
+	 */
+	
+	public static void main (String[] args) throws ScriptException {
+		Parser p = new Parser(new Lexer(new Input("test.ink").readFile()).lex());
+	}
+}

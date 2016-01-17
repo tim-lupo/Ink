@@ -1,0 +1,10 @@
+var hi = 5
+var dicks = 3
+var memes = "hi"
+hi = 6
+var wassup = 3
+println((wassup)*hi)
+
+if (hi>3) {
+
+}

@@ -3,17 +3,43 @@ import java.util.ArrayList;
 public class Function {
 	
 	private String name;
-	private String initialParam;
-	private ArrayList<String> initialContents;
+	private ArrayList<String> parameters;
+	private ArrayList<String> content;
+	private Dictionary dic;
 	
-	public Function(String name, String initialParam, ArrayList<String> contents) {
+	public Function(String name, String initialParam, ArrayList<String> content) {
 		super();
 		this.name = name;
-		this.initialParam = initialParam;
-		this.initialContents = contents;
+		this.parameters = getParameterVars(initialParam);
+		this.content = content;
 	}
 
 	public String getName() {
 		return name;
+	}
+	
+	//Parse parameter list
+	private ArrayList<String> getParameterVars(String value) {
+		ArrayList<String> vars = new ArrayList<String>();
+		char[] toklist = value.toCharArray();
+		String toks = "";
+		for (char tok : toklist) {
+			System.out.println(toks);
+			if (tok != ' ' && tok != ',') {
+				toks += tok;
+			} else {
+				if (toks != "") {
+					if (dic.isName(toks) == true) {
+						vars.add(toks);
+					}
+				}
+				toks = "";
+			}
+		}
+		return vars;
+	}
+	
+	public String toString() {
+		return "Function: Name=" + name + " | Parameters=" + parameters;
 	}
 }

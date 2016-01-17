@@ -2,7 +2,7 @@ import java.io.*;
 
 public class Input {
 	
-	private static String fileName;
+	private String fileName;
 	
     public Input(String fileName) {
 		super();

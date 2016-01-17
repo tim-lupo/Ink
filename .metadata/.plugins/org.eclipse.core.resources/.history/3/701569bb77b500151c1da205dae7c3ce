@@ -1,8 +1,0 @@
-var memes="hello"
-VaR d1cks = memes+4
-print(1+2)
-print(d1cks)
-func testfunc (bob, john, connor){
-	memes = "bye john"
-	nums = (1 + 2) /3
-}

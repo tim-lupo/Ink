@@ -1,4 +1,9 @@
-var hi = 4
-var wassup = 6+hi*hi
-print(wassup)
-print(hi)
+var memes = "hi"
+if (4>3) {
+	if (3>1) {
+		if (memes=="hi") {
+			print("hiiii")
+		}
+	}
+}
+print (memes)
