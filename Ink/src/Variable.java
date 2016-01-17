@@ -7,7 +7,6 @@ public class Variable {
 	private Object value;
 	private Dictionary dic;
 	
-	//dic.eval(dic.reparseVar(value.toString()))
 	public Variable(String name, Object value) {
 		super();
 		this.name = name;

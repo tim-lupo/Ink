@@ -6,10 +6,10 @@ public class Driver {
 	 * TODO:
 	 * -Add for/while
 	 * -Arrays
-	 * -Add functions
+	 * -Add returning on function
 	 * 
-	 * two bugs:
-	 * -nested else if doesnt work
+	 * BUGS:
+	 * -cant call function until its declared
 	 * 
 	 * MAYBE:
 	 * -scope of variables to inside statements

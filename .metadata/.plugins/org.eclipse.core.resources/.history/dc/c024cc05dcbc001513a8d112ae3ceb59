@@ -1,0 +1,3 @@
+func hai(joe, mary) {
+	print(2 +1)
+}

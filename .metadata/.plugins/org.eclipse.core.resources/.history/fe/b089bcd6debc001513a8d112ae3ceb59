@@ -1,0 +1,5 @@
+var num = 'hi'
+num = 4
+
+print num
+

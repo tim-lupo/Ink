@@ -1,0 +1,9 @@
+var num1 = 'hi'
+num1 = 4
+var num2
+
+func hai(joe, mary) {
+	print(joe + mary)
+}
+
+hai(num,2)

@@ -1,9 +1,13 @@
-var num1 = 3
-var num2 = 1
-if (num1>num2) {
-	println("hello")
-	print(num1+num2)
+var num1 = 'hi'
+num1 = 4
+var num2= 8
+
+func hai(joe, mary) {
+	if joe>mary {
+		print mary
+	} else {
+		print (mary*joe)+joe
+	}
 }
-//else {
-print "hi"
-//}
+
+hai(num1,num2)

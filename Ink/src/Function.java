@@ -1,42 +1,81 @@
 import java.util.ArrayList;
 
+import javax.script.ScriptException;
+
 public class Function {
 	
 	private String name;
-	private ArrayList<String> parameters;
-	private ArrayList<String> content;
+	private ArrayList<Variable> parameters;
+	private String content;
 	private Dictionary dic;
 	
-	public Function(String name, String initialParam, ArrayList<String> content) {
+	public Function(String name, String param, String content) {
 		super();
 		this.name = name;
-		this.parameters = getParameterVars(initialParam);
+		this.parameters = getParameterVars(param.substring(1, param.length()-1)+"~");
 		this.content = content;
+	}
+	
+	public void setParam(String param) {
+		String parameter = param.substring(1, param.length()-2)+"~";
+		ArrayList<String> newParams = new ArrayList<String>();
+		char[] toklist = parameter.toCharArray();
+		String toks = "";
+		for (char tok : toklist) {
+			if (tok == ',' || tok == '~') {
+				if (toks != "") {
+					newParams.add(toks.replaceAll(" ", ""));
+					toks = "";
+				}
+			} else {
+				toks += tok;
+			}
+		}
+		if (newParams.size() == parameters.size()) {
+			for (int i=0; i<parameters.size(); i++) {
+				parameters.get(i).setValue(newParams.get(i));
+			}
+		}
 	}
 
 	public String getName() {
 		return name;
 	}
 	
+	public String getContent() {
+		return content;
+	}
+
+	public void callFunc(String content) throws ScriptException {
+		ArrayList<Integer> index = new ArrayList<Integer>();
+		for (Variable var : parameters) {
+			dic.vars.add(var);
+			index.add(dic.vars.size());
+		}
+		new Parser(new Lexer().lex(content.substring(1, content.length()-1)));
+		for (Integer num : index) {
+			dic.vars.remove(num);
+		}
+	}
+	
 	//Parse parameter list
-	private ArrayList<String> getParameterVars(String value) {
-		ArrayList<String> vars = new ArrayList<String>();
+	private ArrayList<Variable> getParameterVars(String value) {
+		ArrayList<Variable> params = new ArrayList<Variable>();
 		char[] toklist = value.toCharArray();
 		String toks = "";
 		for (char tok : toklist) {
-			System.out.println(toks);
-			if (tok != ' ' && tok != ',') {
-				toks += tok;
-			} else {
+			if (tok == ',' || tok == '~') {
 				if (toks != "") {
-					if (dic.isName(toks) == true) {
-						vars.add(toks);
+					if (dic.isName(toks) && !dic.isVariable(toks)) {
+						params.add(new Variable(toks.replaceAll(" ", ""), null));
+						toks = "";
 					}
 				}
-				toks = "";
+			} else {
+				toks += tok;
 			}
 		}
-		return vars;
+		return params;
 	}
 	
 	public String toString() {

@@ -16,6 +16,7 @@ public class Parser {
 	}
 
 	public void parse (ArrayList<String> tokens) throws ScriptException {
+		//System.out.println(tokens);
 		int i = 0; //position of index
 		for (String token : tokens) { //loop through the tokens
 			String tok = token.replace("\t", "");
@@ -28,8 +29,9 @@ public class Parser {
 					System.out.println("INK ERROR: invalid variable declaration");;
 				}
 			} else if (tok.toLowerCase().compareTo("func") == 0) { //if it finds a func declaration
-				if ((dic.isName(tokens.get(i+1)) == true) && (dic.isFunction(tokens.get(i+1)) == false) && (dic.isParameter(tokens.get(i+2)) == true) && (tokens.get(i+3).compareTo("{") == 0)) {
-					//add function
+				if ((dic.isName(tokens.get(i+1)) == true) && (dic.isFunction(tokens.get(i+1)) == false) && (dic.isParameter(tokens.get(i+2)) == true)) {
+					Function func = new Function(tokens.get(i+1), tokens.get(i+2), tokens.get(i+3));
+					dic.funcs.add(func);
 				} else {
 					System.out.println("INK ERROR: invalid function declaration");
 				}
@@ -49,11 +51,19 @@ public class Parser {
 					System.out.println("INK ERROR: invalid print statement");
 					System.out.println("\tCannot compute: " + tokens.get(i+1));
 				}
-			} else if ((dic.isVariable(tok))) {
-				if ((tokens.get(i-1).compareTo("<EOL>") == 0) && (dic.findVariable(tok)>=0)) {
+			} else if (dic.isVariable(tok)) {
+				if ((tokens.get(i-1).compareTo("<EOL>") == 0) && (dic.findVariable(tok)>=0) && (tokens.get(i+1).compareTo("=")) == 0) {
 					dic.vars.get(dic.findVariable(tok)).setValue(tokens.get(i+2));
 				}
-			} else if (tok.toLowerCase().compareTo("if") == 0 && (tokens.get(i-1).compareTo("else")) != 0) {
+			} else if (dic.isFunction(tok)) {
+				if ((tokens.get(i-1).compareTo("<EOL>") == 0) && (dic.findFunction(tok)>=0)) {
+					Function func = dic.funcs.get(dic.findFunction(tok));
+					func.setParam(tokens.get(i+1)+"~");
+					func.callFunc(func.getContent());
+				}
+			}
+			
+			else if (tok.toLowerCase().compareTo("if") == 0 && (tokens.get(i-1).compareTo("else")) != 0) {
 				String value = "";
 				try {
 		            value = dic.eval(dic.reparseVar(tokens.get(i+1)+"~"));

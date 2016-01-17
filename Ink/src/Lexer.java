@@ -24,7 +24,7 @@ public class Lexer {
 				isPara = true;
 			} else if (tok == ')') {
 				isPara = false;
-			} else if (tok == '"') {
+			} else if (tok == '"' || tok == '\'') {
 				if (isQuot == false) { isQuot = true; }
 				else { isQuot = false; }
 			} if (tok == '{' && !isComment) {
@@ -74,6 +74,7 @@ public class Lexer {
 					toks = "";
 					toks += tok;
 				} else {
+					if (toks != "") { tokens.add(toks); toks="";}
 					toks += tok;
 				}
 			} else if ((tok != ' ') || (isPara == true) || (isQuot == true) || (isMath == true)) {
