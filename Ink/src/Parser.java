@@ -16,7 +16,7 @@ public class Parser {
 	}
 
 	public void parse (ArrayList<String> tokens) throws ScriptException {
-		System.out.println(tokens);
+		//System.out.println(tokens);
 		int i = 0; //position of index
 		for (String token : tokens) { //loop through the tokens
 			String tok = token.replace("\t", "");
@@ -24,7 +24,6 @@ public class Parser {
 			} else if (tok.toLowerCase().compareTo("var") == 0) { //if it finds a var declaration
 				if ((dic.isName(tokens.get(i+1)) == true) && (dic.isVariable(tokens.get(i+1)) == false) && (tokens.get(i+2).compareTo("=") == 0)) {
 					Variable var = new Variable(tokens.get(i+1), tokens.get(i+3));
-					System.out.println("NAME : " + var.getName() + " | VALUE: " + var.getValue());
 					dic.vars.add(var);
 				} else {
 					System.out.println("INK ERROR: invalid variable declaration");;
@@ -55,8 +54,8 @@ public class Parser {
 						func.callFunc(func.getContent());
 						try { System.out.print(dic.eval(dic.reparseVar(func.getValue()+"~"))); }
 						catch (NullPointerException e) { System.out.println("INK ERROR: function '" + func.getName() + "' does not return anything"); }
-	            	} else {	
-	            		System.out.print(dic.eval(dic.reparseVar(value+"~")));
+	            	} else {
+	            		System.out.print(dic.eval(dic.reparseVar(value+"~").replace("(", "")));
 	            	}
 				} catch (ScriptException se) {
 					System.out.println("INK ERROR: invalid print statement");
@@ -98,9 +97,7 @@ public class Parser {
 			} else if (tok.toLowerCase().compareTo("return") == 0) {
 				String funcName = tokens.get(tokens.size()-2);
 				Function func = dic.funcs.get(dic.findFunction(funcName.substring(1, funcName.length()-1)));
-				System.out.println(func);
 				func.setValue(tokens.get(i+1));
-				System.out.println(func);
 			}
 			i++;
 		}

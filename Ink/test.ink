@@ -1,8 +1,3 @@
-//var bob = 3
-
-func hai(lol, hiy) {
-	//print(lol+hiy)
-	return lol*hiy
-}
-
-print(hai(1,8))
+var test = [1, 6, 4]
+var bob = 3
+println num

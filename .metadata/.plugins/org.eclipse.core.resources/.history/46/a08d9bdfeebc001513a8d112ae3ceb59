@@ -1,5 +1,0 @@
-var bob = 0
-if (bob<5) {
-	print bob
-	bob = bob+1
-}

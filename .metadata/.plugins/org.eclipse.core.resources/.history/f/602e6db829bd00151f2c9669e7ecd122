@@ -1,0 +1,47 @@
+import java.util.ArrayList;
+import javax.script.ScriptException;
+
+public class Variable {
+	
+	private String name;
+	private Object value;
+	private ArrayList<Object> arr = new ArrayList<Object>();
+	private Dictionary dic;
+	
+	public Variable(String name, Object value) {
+		super();
+		this.name = name;
+		setValue(value);
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Object getValue() {
+		return value;
+	}
+
+	public void setValue(Object value) {
+		if (value.toString().toCharArray()[0] == '[' && value.toString().toCharArray()[value.toString().length()-1] == ']') {
+			String temp = value.toString().substring(1, value.toString().length()-1)+"~";
+			char[] toklist = temp.toCharArray();
+			String toks = "";
+			for (char tok : toklist) {
+				if (tok == ',' || tok == '~') {
+					if (toks != "") { arr.add(toks); toks="";}
+				} else {
+					toks += tok;
+				}
+			}
+			this.value = arr;
+		} else {
+			this.value = value;
+		}
+		System.out.println(arr);
+	}
+	
+	public Object getArrValue (int index) {
+		return arr.get(index);
+	}
+}

@@ -57,7 +57,7 @@ public class Dictionary {
 	
 	//Lex raw value, loop through the lexed value, replace all variables with their value, reconcatenate and evaluate
 	public static String reparseVar(String value) throws ScriptException {
-		System.out.println(value);
+		//System.out.println(value);
 		for (Variable var : vars) {
 			if (var.getName().compareTo(value.substring(0, value.length()-1)) == 0) {
 				value = var.getValue().toString()+"~";
@@ -71,13 +71,37 @@ public class Dictionary {
 		}
 		boolean hasVar = true;
 		ArrayList<String> tokens = relexVar(value);
+		//System.out.println(tokens);
 		while (hasVar) {
 			boolean varExists = true;
 			while (varExists) {
 				int i = 0;
 				for (String tok : tokens) {
 					for (Variable var : vars) {
-						if (tokens.contains(var.getName())) {
+						/*if (tok.contains(".get")) {
+							try {
+								String sub = "";
+								char[] toklist = tok.toCharArray();
+								for (char toks : toklist) {
+									if (toks == '.') { break; }
+									else { sub += toks; }
+								}
+								//String strindex = tokens.get(i+1);
+								//System.out.println(strindex);
+							} catch (Exception e) {
+								System.out.println(e);
+								System.out.println("INK ERROR: cannot get the index of this array");
+							}
+						} else*/ if (tok.contains(".length")) {
+							try { 
+								String sub = tok.substring(0, tok.length()-7);
+								if (var.getName().replace(" ", "").compareTo(sub) == 0) {
+									tokens.set(tokens.indexOf(tok), ""+var.getArrLength());
+								}
+							} catch (Exception e) {
+								System.out.println("INK ERROR: cannot get this length");
+							}
+						} else if (tokens.contains(var.getName())) {
 							tokens.set(tokens.indexOf(var.getName()), (String) var.getValue());
 						} else { i+= 1; }
 					}
@@ -100,11 +124,12 @@ public class Dictionary {
 		for (String tok : tokens) {
 			reparsed += tok;
 		}
-		System.out.println(reparsed);
+		//System.out.println(reparsed);
 		return reparsed;
 	}
 	
 	private static ArrayList<String> relexVar (String value) {
+		//System.out.println("VAL : " + value);
 		char[] toklist = value.toCharArray();
 		ArrayList<String> tokens = new ArrayList<String>();
 		String toks = "";

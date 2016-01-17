@@ -5,6 +5,7 @@ public class Variable {
 	
 	private String name;
 	private Object value;
+	private ArrayList<Object> arr = new ArrayList<Object>();
 	private Dictionary dic;
 	
 	public Variable(String name, Object value) {
@@ -22,6 +23,35 @@ public class Variable {
 	}
 
 	public void setValue(Object value) {
-		this.value = value;
+		if (value.toString().toCharArray()[0] == '[' && value.toString().toCharArray()[value.toString().length()-1] == ']') {
+			String temp = value.toString().substring(1, value.toString().length()-1)+"~";
+			char[] toklist = temp.toCharArray();
+			String toks = "";
+			for (char tok : toklist) {
+				if (tok == ',' || tok == '~') {
+					if (toks != "") { arr.add(toks); toks="";}
+				} else {
+					toks += tok;
+				}
+			}
+		} else {
+			this.value = value;
+		}
+	}
+	
+	public Object getArrValue (int index) {
+		return arr.get(index);
+	}
+	
+	public int getArrLength () {
+		return arr.size();
+	}
+	
+	public void addArr (Object o) {
+		arr.add(o);
+	}
+	
+	public String toString() {
+		return "NAME: " + name + " | ARR: " + arr;
 	}
 }

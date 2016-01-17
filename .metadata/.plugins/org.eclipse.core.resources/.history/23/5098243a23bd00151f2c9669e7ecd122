@@ -1,0 +1,6 @@
+
+public class Array {
+	
+	private String name;
+	private String value;
+}

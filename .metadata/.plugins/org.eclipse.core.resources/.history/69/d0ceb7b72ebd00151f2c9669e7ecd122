@@ -1,0 +1,4 @@
+var test = [1, 6, 4]
+var bob = 3
+var num = test[0]
+println bob

@@ -15,7 +15,6 @@ public class Function {
 		this.name = name;
 		this.parameters = getParameterVars(param.substring(1, param.length()-1)+"~");
 		this.content = content;
-		System.out.println(toString());
 	}
 	
 	public void setParam(String param) {

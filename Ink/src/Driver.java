@@ -5,15 +5,14 @@ public class Driver {
 	/*
 	 * TODO:
 	 * -Add for/while
-	 * -Arrays
-	 * -Add assigning return values of func to variables
-	 * -Cant add multiple parathensis when printing certain things (update lexer)
 	 * 
 	 * BUGS:
 	 * -cant call function until its declared
-	 * 
-	 * MAYBE:
+	 * -Add assigning return values of func to variables
+	 * -Cant add multiple parathensis when printing certain things (update lexer)
 	 * -scope of variables to inside statements
+	 * -add, remove, and get from arrays
+	 * 
 	 */
 	
 	public static void main (String[] args) throws ScriptException {

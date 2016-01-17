@@ -1,0 +1,5 @@
+var test = [1, 6, 4]
+var bob = 3
+var num = test.length
+println bub
+println(test[0])

@@ -1,6 +1,0 @@
-var bob = 0
-bob = bob+1
-while (bob<5) {
-	print bob
-	bob = bob+1
-}

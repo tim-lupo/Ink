@@ -1,3 +1,0 @@
-var bob = 1
-bob = 3+num
-print bob

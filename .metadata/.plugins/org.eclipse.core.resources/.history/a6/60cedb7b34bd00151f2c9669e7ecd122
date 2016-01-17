@@ -1,0 +1,280 @@
+import java.util.ArrayList;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
+public class Dictionary {
+	
+	public static ArrayList<Variable> vars = new ArrayList<Variable>();
+	public static ArrayList<Function> funcs = new ArrayList<Function>();
+	private static char[] symbols = {'(', ')', '{', '}', '=', '+', '-', '*', '/', '"', '\''};
+	
+	public Dictionary() {
+		super();
+	}
+	
+	//Check if valid name
+	public static boolean isName(String name) {
+		char[] toks = name.toCharArray();
+		for (char tok : toks) {
+			for (char symbol : symbols) {
+				if (tok == symbol || (Character.isDigit(toks[0])) == true) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	//Check if existing variable
+	public static boolean isVariable (String name) {
+		for (final Variable var : vars) {
+            if (var.getName().equals(name)) {
+                return true;
+            }
+		}
+		return false;
+	}
+	
+	//Check if existing function
+	public static boolean isFunction (String name) {
+		for (final Function func : funcs) {
+            if (func.getName().equals(name)) {
+                return true;
+            }
+		}
+		return false;
+	}
+	
+	//Check if valid parameter list
+	public static boolean isParameter(String name) {
+		char[] toks = name.toCharArray();
+		if (toks[0] != '(' || toks[toks.length-1] != ')') {
+			return false;
+		}
+		return true;
+	}
+	
+	//Lex raw value, loop through the lexed value, replace all variables with their value, reconcatenate and evaluate
+	public static String reparseVar(String value) throws ScriptException {
+		System.out.println(value);
+		for (Variable var : vars) {
+			if (var.getName().compareTo(value.substring(0, value.length()-1)) == 0) {
+				value = var.getValue().toString()+"~";
+			}
+		} for (Function func : funcs) {
+			if (func.getName().compareTo(value.substring(0, value.length()-1)) == 0) {
+				System.out.println(func);
+				//value = func.getValue().toString()+"~";
+				System.out.println(func.getValue());
+			}
+		}
+		boolean hasVar = true;
+		ArrayList<String> tokens = relexVar(value);
+		System.out.println(tokens);
+		while (hasVar) {
+			boolean varExists = true;
+			while (varExists) {
+				int i = 0;
+				for (String tok : tokens) {
+					for (Variable var : vars) {
+						if (tok.contains(".get")) {
+							try {
+								String sub = "";
+								char[] toklist = tok.toCharArray();
+								for (char toks : toklist) {
+									if (toks == '.') { break; }
+									else { sub += toks; }
+								}
+								String strindex = tokens.get(i+1);
+								//System.out.println(strindex);
+							} catch (Exception e) {
+								System.out.println(e);
+								System.out.println("INK ERROR: cannot get the index of this array");
+							}
+						} else if (tok.contains(".length")) {
+							try { 
+								String sub = tok.substring(0, tok.length()-7);
+								if (var.getName().replace(" ", "").compareTo(sub) == 0) {
+									tokens.set(tokens.indexOf(tok), ""+var.getArrLength());
+								}
+							} catch (Exception e) {
+								System.out.println("INK ERROR: cannot get this length");
+							}
+						} else if (tokens.contains(var.getName())) {
+							tokens.set(tokens.indexOf(var.getName()), (String) var.getValue());
+						} else { i+= 1; }
+					}
+				}
+				if (i >= (tokens.size()*vars.size())) { varExists = false; }
+			}
+			String reparsed = "";
+			for (String tok : tokens) {
+				reparsed += tok;
+			}
+			boolean exists = false;
+			for (Variable var : vars) {
+				if (relexVar(reparsed).contains(var.getName())) {
+					exists = true;
+				}
+			} if (!exists) { hasVar = false; }
+			tokens = relexVar(reparsed+"~");
+		}
+		String reparsed = "";
+		for (String tok : tokens) {
+			reparsed += tok;
+		}
+		//System.out.println(reparsed);
+		return reparsed;
+	}
+	
+	private static ArrayList<String> relexVar (String value) {
+		//System.out.println("VAL : " + value);
+		char[] toklist = value.toCharArray();
+		ArrayList<String> tokens = new ArrayList<String>();
+		String toks = "";
+		boolean isPara = false;
+		for (int i=0; i<toklist.length; i++) {
+			char tok = toklist[i];
+			if (tok == '"') {
+				if (isPara) { isPara = false; }
+				else if (!isPara) { isPara = true; }
+			}
+			if (tok == '+' || tok == '-' || tok == '/' || tok == '*' || tok == '>' || tok == '<') {
+				tokens.add(toks.replaceAll(" ", ""));
+				toks = "";
+				toks += tok;
+				tokens.add(toks.replaceAll(" ", ""));
+				toks = "";
+			} else if (tok == '~') {
+				if (toks != "") { tokens.add(toks.replaceAll(" ", "")); toks = ""; }
+			} else if (tok == '=') {
+				if (toks != "") { tokens.add(toks.replaceAll(" ", "")); toks = ""; }
+				toks += tok;
+				if (toklist[i+1] != '=') {
+					tokens.add(toks.replaceAll(" ", "")); toks = "";
+				}
+			} else if (tok == '(' || tok == ')') {
+				tokens.add(toks.replaceAll(" ", ""));
+				toks = "";
+				toks += tok;
+				tokens.add(toks.replaceAll(" ", ""));
+				toks = "";
+			} else {
+				toks += tok;
+			}
+		}
+		return tokens;
+	}
+	
+	//returns the index of the variable with a given name
+	public static int findVariable(String name) {
+		for (int i=0; i<vars.size(); i++) {
+			if (vars.get(i).getName().compareTo(name) == 0) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	//returns the index of the function with a given name
+		public static int findFunction(String name) {
+			for (int i=0; i<funcs.size(); i++) {
+				if (funcs.get(i).getName().compareTo(name) == 0) {
+					return i;
+				}
+			}
+			return -1;
+		}
+	
+	public static void reparse (ArrayList<String> tokens) throws ScriptException {
+		int i = 0; //position of index
+		for (String token : tokens) { //loop through the tokens
+			String tok = token.replace("\t", "");
+			if (tok.compareTo("<EOL>") == 0) { //if its the end of the line
+			} else if (tok.toLowerCase().compareTo("var") == 0) { //if it finds a var declaration
+				if ((isName(tokens.get(i+1)) == true) && (isVariable(tokens.get(i+1)) == false) && (tokens.get(i+2).compareTo("=") == 0)) {
+					Variable var = new Variable(tokens.get(i+1), tokens.get(i+3));
+					vars.add(var);
+				} else {
+					System.out.println("INK ERROR: invalid variable declaration");
+				}
+			} else if (isVariable(tok)) {
+				if ((tokens.get(i-1).compareTo("<EOL>") == 0) && (findVariable(tok)>=0) && (tokens.get(i+1).compareTo("=")) == 0) {
+					vars.get(findVariable(tok)).setValue(tokens.get(i+2));
+				}
+			} else if (isFunction(tok)) {
+				if ((tokens.get(i-1).compareTo("<EOL>") == 0) && (findFunction(tok)>=0)) {
+					Function func = funcs.get(findFunction(tok));
+					func.setParam(tokens.get(i+1)+"~");
+					func.callFunc(func.getContent());
+				}
+			} else if (tok.toLowerCase().compareTo("print") == 0) { //if it finds a print declaration
+				String value = tokens.get(i+1);
+				try {
+					if (findFunction(tokens.get(i+1))>=0) {
+	            		Function func = funcs.get(findFunction(tokens.get(i+1)));
+						func.setParam(tokens.get(i+2)+"~");
+						func.callFunc(func.getContent());
+						System.out.print(eval(reparseVar(func.getValue()+"~")));
+	            	} else {	
+	            		System.out.print(eval(reparseVar(value+"~")));
+	            	}
+				} catch (ScriptException se) {
+					System.out.println("INK ERROR: invalid print statement");
+					System.out.println("\tCannot compute: " + tokens.get(i+1));
+				}
+			} else if (tok.toLowerCase().compareTo("println") == 0) { //if it finds a print declaration
+				String value = tokens.get(i+1);
+				try {
+		            System.out.println(eval(reparseVar(value+"~")));
+				} catch (ScriptException se) {
+					System.out.println("INK ERROR: invalid println statement");
+					System.out.println("\tCannot compute: " + tokens.get(i+1));
+				}
+			} else if (tok.toLowerCase().compareTo("if") == 0 && (tokens.get(i-1).compareTo("else")) != 0) {
+				String value = "";
+				try {
+		            value = eval(reparseVar(tokens.get(i+1)+"~"));
+		            if (value.compareTo("true") == 0) {
+		            	new Parser(new Lexer().lex(tokens.get(i+2).substring(1, tokens.get(i+2).length()-2)));
+					} else if (value.compareTo("false") == 0) {
+						for (int n=i; n<tokens.size(); n++) {
+							if (tokens.get(n).replaceAll(" ", "").toLowerCase().compareTo("else") == 0) {
+								if (tokens.get(n+1).toLowerCase().compareTo("if") == 0) {
+									if (eval(reparseVar(tokens.get(n+2)+"~")).compareTo("true") == 0) {
+										new Parser(new Lexer().lex(tokens.get(n+3).substring(1, tokens.get(n+3).length()-1)));
+										break;
+									}
+								} else {
+									new Parser(new Lexer().lex(tokens.get(n+1).substring(1, tokens.get(n+1).length()-1)));
+									break;
+								}
+							}
+						}
+					} else { System.out.println("INK ERROR: invalid if statement (cannot compare " + value + ")"); }
+				} catch (ScriptException se) {
+					System.out.println("INK ERROR: invalid if statement");
+					System.out.println("\tCannot compute: " + tokens.get(i+1));
+				}
+			} else if (tok.toLowerCase().compareTo("return") == 0) {
+				String funcName = tokens.get(tokens.size()-2);
+				Function func = funcs.get(findFunction(funcName.substring(1, funcName.length()-1)));
+				func.setValue(tokens.get(i+1));
+			}
+			i++;
+		}
+	}
+	
+	//Evaluate value
+	public static String eval(Object value) throws ScriptException {
+		Value val = new Value();
+		Object obj = val.evaluate(value.toString());
+		String str = obj.toString();
+		return str;
+	}
+	
+	public String toString() {
+		return "Variables: " + vars + "\nFunctions: " + funcs;
+	}
+}
