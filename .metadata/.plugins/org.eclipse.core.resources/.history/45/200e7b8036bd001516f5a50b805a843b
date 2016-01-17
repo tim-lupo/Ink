@@ -1,0 +1,11 @@
+var bob = 3
+var randy = 4
+if (randy>bob) {
+	print "randy is cooler"
+	if (bob>randy) {
+		print("will never happen")
+	} 
+	else {
+		print(bob+randy)
+	}
+}

@@ -8,9 +8,3 @@ if (randy>bob) {
 		println(bob+randy)
 	}
 }
-
-func hai(li, joe) {
-	print(li*joe)
-}
-
-hai(2,3)

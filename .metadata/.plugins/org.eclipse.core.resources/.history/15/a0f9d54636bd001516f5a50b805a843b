@@ -15,8 +15,6 @@ public class Driver {
 	 * 
 	 */
 	
-	//String input = ""
-	
 	public static void main (String[] args) throws ScriptException {
 		Parser p = new Parser(new Lexer().lex(new Input("test.ink").readFile()));
 	}

@@ -12,5 +12,3 @@ if (randy>bob) {
 func hai(li, joe) {
 	print(li*joe)
 }
-
-hai(2,3)

@@ -1,2 +1,0 @@
-arr test = [1, 6, 4]
-print(test)
