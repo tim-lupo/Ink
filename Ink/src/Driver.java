@@ -4,10 +4,15 @@ public class Driver {
 	
 	/*
 	 * TODO:
-	 * -Add elif
 	 * -Add for/while
 	 * -Arrays
 	 * -Comments
+	 * 
+	 * two bugs:
+	 * -nested else if doesnt work
+	 * 
+	 * MAYBE:
+	 * -scope of variables to inside statements
 	 */
 	
 	public static void main (String[] args) throws ScriptException {

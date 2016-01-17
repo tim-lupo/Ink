@@ -1,11 +1,23 @@
-var memes = "hi"
+var memes = "hi bob"
 if (4>3) {
-	if (3<1) {
+	var hai = 3 
+	if (3>1) {
 		if (memes=="hi") {
-			print("hiiii")
+			println("hiiii")
+		} else if (1>0){
+			if 3>4 { print "h" }
+			else if (1>0) { 
+				print "hi" 
+			}
+		} else{
+			println "hhh"
 		}
+	} else if 1<0 {
+		println "you're a genius"
+	} else if 1<0 {
+		println "you're dfkhjflkgja genius"
 	} else {
-		println("fucker")
+		println("fu cker")
 	}
 }
 print (memes)

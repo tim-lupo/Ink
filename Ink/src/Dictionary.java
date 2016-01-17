@@ -101,24 +101,29 @@ public class Dictionary {
 		char[] toklist = value.toCharArray();
 		ArrayList<String> tokens = new ArrayList<String>();
 		String toks = "";
+		boolean isPara = false;
 		for (int i=0; i<toklist.length; i++) {
 			char tok = toklist[i];
+			if (tok == '"') {
+				if (isPara) { isPara = false; }
+				else if (!isPara) { isPara = true; }
+			}
 			if (tok == '+' || tok == '-' || tok == '/' || tok == '*' || tok == '>' || tok == '<') {
-				tokens.add(toks.replace(" ", ""));
+				tokens.add(toks);
 				toks = "";
 				toks += tok;
-				tokens.add(toks.replace(" ", ""));
+				tokens.add(toks);
 				toks = "";
 			} else if (tok == '~') {
-				if (toks != "") { tokens.add(toks.replace(" ", "")); toks = ""; }
+				if (toks != "") { tokens.add(toks); toks = ""; }
 			} else if (tok == '=') {
-				if (toks != "") { tokens.add(toks.replace(" ", "")); toks = ""; }
+				if (toks != "") { tokens.add(toks); toks = ""; }
 				toks += tok;
 				if (toklist[i+1] != '=') {
-					tokens.add(toks.replace(" ", "")); toks = "";
+					tokens.add(toks); toks = "";
 				}
 			} else if (tok == '(' || tok == ')') {
-				tokens.add(toks.replace(" ", ""));
+				tokens.add(toks);
 				toks = "";
 				toks += tok;
 				tokens.add(toks);
@@ -141,6 +146,7 @@ public class Dictionary {
 	}
 	
 	public static void reparse (ArrayList<String> tokens) throws ScriptException {
+		System.out.println(tokens);
 		int i = 0; //position of index
 		for (String token : tokens) { //loop through the tokens
 			String tok = token.replace("\t", "");
@@ -172,7 +178,7 @@ public class Dictionary {
 				if ((tokens.get(i-1).compareTo("<EOL>") == 0) && (findVariable(tok)>=0)) {
 					vars.get(findVariable(tok)).setValue(tokens.get(i+2));
 				}
-			} else if (tok.toLowerCase().compareTo("if") == 0) {
+			} else if (tok.toLowerCase().compareTo("if") == 0 && (tokens.get(i-1).compareTo("else")) != 0) {
 				String value = "";
 				try {
 		            value = eval(reparseVar(tokens.get(i+1)+"~"));
@@ -180,8 +186,16 @@ public class Dictionary {
 		            	new Parser(new Lexer().lex(tokens.get(i+2).substring(1, tokens.get(i+2).length()-2)));
 					} else if (value.compareTo("false") == 0) {
 						for (int n=i; n<tokens.size(); n++) {
-							if (tokens.get(n).toLowerCase().compareTo("else") == 0) {
-								new Parser(new Lexer().lex(tokens.get(n+1).substring(1, tokens.get(n+1).length()-1)));
+							if (tokens.get(n).replaceAll(" ", "").toLowerCase().compareTo("else") == 0) {
+								if (tokens.get(n+1).toLowerCase().compareTo("if") == 0) {
+									if (eval(reparseVar(tokens.get(n+2)+"~")).compareTo("true") == 0) {
+										new Parser(new Lexer().lex(tokens.get(n+3).substring(1, tokens.get(n+3).length()-1)));
+										break;
+									}
+								} else {
+									new Parser(new Lexer().lex(tokens.get(n+1).substring(1, tokens.get(n+1).length()-1)));
+									break;
+								}
 							}
 						}
 					} else { System.out.println("INK ERROR: invalid if statement (cannot compare " + value + ")"); }

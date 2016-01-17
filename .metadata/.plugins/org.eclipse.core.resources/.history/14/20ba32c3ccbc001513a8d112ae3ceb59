@@ -1,0 +1,22 @@
+import javax.script.ScriptException;
+
+public class Driver {
+	
+	/*
+	 * TODO:
+	 * -Add elif
+	 * -Add for/while
+	 * -Arrays
+	 * -Comments
+	 * 
+	 * two bugs:
+	 * -no spaces in strings
+	 * -nested else if doesnt work
+	 * 
+	 * MAYBE:
+	 */
+	
+	public static void main (String[] args) throws ScriptException {
+		Parser p = new Parser(new Lexer().lex(new Input("test.ink").readFile()));
+	}
+}

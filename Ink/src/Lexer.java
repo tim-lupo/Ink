@@ -19,6 +19,7 @@ public class Lexer {
 		
 		for (int i=0; i<toklist.length; i++) {
 			char tok = toklist[i];
+			//System.out.println(toks);
 			if (tok == '(') {
 				isPara = true;
 			} else if (tok == ')') {
@@ -38,7 +39,7 @@ public class Lexer {
 			if (isBracket == true) {
 				toks += tok;
 			} else if ((tok == '=')) { 
-				if (toklist[i+1]=='=' || toklist[i-1]=='=') {
+				if (toklist[i+1]=='=' || toklist[i-1]=='=' || toklist[i+1]=='!' || toklist[i-1]=='!') {
 					toks += tok;
 				} else if (toks == "") {
 					tokens.add(String.valueOf(tok));
@@ -48,7 +49,6 @@ public class Lexer {
 					tokens.add(String.valueOf(tok));
 					toks = "";
 				}
-				isMath = true;
 			} else if (tok == '~') {
 				isMath = false;
 				if (toks != "") { tokens.add(toks); toks = ""; }
