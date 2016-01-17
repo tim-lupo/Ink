@@ -1,13 +1,8 @@
-var num1 = 'hi'
-num1 = 4
-var num2= 8
+//var bob = 3
 
-func hai(joe, mary) {
-	if joe>mary {
-		print mary
-	} else {
-		print (mary*joe)+joe
-	}
+func hai(lol, hiy) {
+	//print(lol+hiy)
+	return lol*hiy
 }
 
-hai(num1,num2)
+print(hai(1,8))

@@ -1,0 +1,7 @@
+var bob = 3
+
+func hai(lol, hiy) {
+	print(lol+hiy)
+}
+
+hai(1,2)

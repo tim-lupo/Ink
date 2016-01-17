@@ -1,6 +1,0 @@
-var num1 = 3
-var num5 = 4
-
-func hai(joe, mary) {
-	print(num1 + num5)
-}

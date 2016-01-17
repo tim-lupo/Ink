@@ -1,0 +1,8 @@
+var bob = 3
+
+func hai(lol, hiy) {
+	//print(lol+hiy)
+	return lol*hiy
+}
+
+hai(1,8)

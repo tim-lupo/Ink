@@ -1,6 +1,0 @@
-var memes = "hi"
-if memes=="hi" {
-	var text = "hello"
-	print(text+2)
-}
-print (memes)

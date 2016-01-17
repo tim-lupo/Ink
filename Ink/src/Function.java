@@ -8,12 +8,14 @@ public class Function {
 	private ArrayList<Variable> parameters;
 	private String content;
 	private Dictionary dic;
+	private Object value;
 	
 	public Function(String name, String param, String content) {
 		super();
 		this.name = name;
 		this.parameters = getParameterVars(param.substring(1, param.length()-1)+"~");
 		this.content = content;
+		System.out.println(toString());
 	}
 	
 	public void setParam(String param) {
@@ -46,13 +48,25 @@ public class Function {
 		return content;
 	}
 
+	public Object getValue() {
+		return value;
+	}
+
+	public void setValue(Object value) {
+		this.value = value;
+	}
+
 	public void callFunc(String content) throws ScriptException {
 		ArrayList<Integer> index = new ArrayList<Integer>();
 		for (Variable var : parameters) {
 			dic.vars.add(var);
 			index.add(dic.vars.size());
 		}
-		new Parser(new Lexer().lex(content.substring(1, content.length()-1)));
+		String code = content.substring(1, content.length()-1);
+		if (code.contains("return")) {
+			code += "<"+name+">~";
+		}
+		new Parser(new Lexer().lex(code));
 		for (Integer num : index) {
 			dic.vars.remove(num);
 		}
@@ -79,6 +93,6 @@ public class Function {
 	}
 	
 	public String toString() {
-		return "Function: Name=" + name + " | Parameters=" + parameters;
+		return "Function: Name=" + name + " | Parameters=" + parameters.get(0).getValue() + " | Value=" + value;
 	}
 }

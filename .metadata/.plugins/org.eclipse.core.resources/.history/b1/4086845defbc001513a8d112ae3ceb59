@@ -1,0 +1,7 @@
+var bob = 0
+bob = 1
+print bob
+//while (bob<5) {
+//	print bob
+//	bob = bob+1
+//}

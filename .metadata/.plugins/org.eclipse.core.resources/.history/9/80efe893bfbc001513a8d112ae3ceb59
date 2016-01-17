@@ -1,5 +1,0 @@
-var memes = "hi"
-if 3>2 {
-	println("hello")
-}
-print (memes)

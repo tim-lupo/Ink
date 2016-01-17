@@ -6,7 +6,8 @@ public class Driver {
 	 * TODO:
 	 * -Add for/while
 	 * -Arrays
-	 * -Add returning on function
+	 * -Add assigning return values of func to variables
+	 * -Cant add multiple parathensis when printing certain things (update lexer)
 	 * 
 	 * BUGS:
 	 * -cant call function until its declared

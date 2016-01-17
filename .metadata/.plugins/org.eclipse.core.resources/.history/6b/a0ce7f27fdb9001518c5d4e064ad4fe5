@@ -1,3 +1,0 @@
-var hi = 5
-var wassup = 3*hi*hi
-print(hi)

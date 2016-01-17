@@ -1,3 +1,0 @@
-var num1 = 3
-var num2
-if (num1>num2)

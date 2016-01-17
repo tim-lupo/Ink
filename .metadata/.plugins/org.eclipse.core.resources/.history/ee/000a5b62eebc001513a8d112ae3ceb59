@@ -1,0 +1,5 @@
+num bob = 0
+while (bob<5) {
+	print bob
+	bob = bob +1
+}

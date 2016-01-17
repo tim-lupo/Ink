@@ -16,7 +16,7 @@ public class Parser {
 	}
 
 	public void parse (ArrayList<String> tokens) throws ScriptException {
-		//System.out.println(tokens);
+		System.out.println(tokens);
 		int i = 0; //position of index
 		for (String token : tokens) { //loop through the tokens
 			String tok = token.replace("\t", "");
@@ -24,6 +24,7 @@ public class Parser {
 			} else if (tok.toLowerCase().compareTo("var") == 0) { //if it finds a var declaration
 				if ((dic.isName(tokens.get(i+1)) == true) && (dic.isVariable(tokens.get(i+1)) == false) && (tokens.get(i+2).compareTo("=") == 0)) {
 					Variable var = new Variable(tokens.get(i+1), tokens.get(i+3));
+					System.out.println("NAME : " + var.getName() + " | VALUE: " + var.getValue());
 					dic.vars.add(var);
 				} else {
 					System.out.println("INK ERROR: invalid variable declaration");;
@@ -35,22 +36,6 @@ public class Parser {
 				} else {
 					System.out.println("INK ERROR: invalid function declaration");
 				}
-			} else if (tok.toLowerCase().compareTo("print") == 0) { //if it finds a print declaration
-				String value = tokens.get(i+1);
-				try {
-		            System.out.print(dic.eval(dic.reparseVar(value+"~")));
-				} catch (ScriptException se) {
-					System.out.println("INK ERROR: invalid print statement");
-					System.out.println("\tCannot compute: " + tokens.get(i+1));
-				}
-			} else if (tok.toLowerCase().compareTo("println") == 0) { //if it finds a print declaration
-				String value = tokens.get(i+1);
-				try {
-		            System.out.println(dic.eval(dic.reparseVar(value+"~")));
-				} catch (ScriptException se) {
-					System.out.println("INK ERROR: invalid print statement");
-					System.out.println("\tCannot compute: " + tokens.get(i+1));
-				}
 			} else if (dic.isVariable(tok)) {
 				if ((tokens.get(i-1).compareTo("<EOL>") == 0) && (dic.findVariable(tok)>=0) && (tokens.get(i+1).compareTo("=")) == 0) {
 					dic.vars.get(dic.findVariable(tok)).setValue(tokens.get(i+2));
@@ -61,9 +46,31 @@ public class Parser {
 					func.setParam(tokens.get(i+1)+"~");
 					func.callFunc(func.getContent());
 				}
-			}
-			
-			else if (tok.toLowerCase().compareTo("if") == 0 && (tokens.get(i-1).compareTo("else")) != 0) {
+			} else if (tok.toLowerCase().compareTo("print") == 0) { //if it finds a print declaration
+				String value = tokens.get(i+1);
+				try {
+					if (dic.findFunction(tokens.get(i+1).replace("(", ""))>=0) {
+	            		Function func = dic.funcs.get(dic.findFunction(tokens.get(i+1).replace("(", "")));
+						func.setParam(tokens.get(i+2).replace(")", "")+")~");
+						func.callFunc(func.getContent());
+						try { System.out.print(dic.eval(dic.reparseVar(func.getValue()+"~"))); }
+						catch (NullPointerException e) { System.out.println("INK ERROR: function '" + func.getName() + "' does not return anything"); }
+	            	} else {	
+	            		System.out.print(dic.eval(dic.reparseVar(value+"~")));
+	            	}
+				} catch (ScriptException se) {
+					System.out.println("INK ERROR: invalid print statement");
+					System.out.println("\tCannot compute: " + tokens.get(i+1));
+				}
+			} else if (tok.toLowerCase().compareTo("println") == 0) { //if it finds a print declaration
+				String value = tokens.get(i+1);
+				try {
+		            System.out.println(dic.eval(dic.reparseVar(value+"~")));
+				} catch (ScriptException se) {
+					System.out.println("INK ERROR: invalid println statement");
+					System.out.println("\tCannot compute: " + tokens.get(i+1));
+				}
+			} else if (tok.toLowerCase().replaceAll("\t", "").compareTo("if") == 0 && (tokens.get(i-1).compareTo("else")) != 0) {
 				String value = "";
 				try {
 		            value = dic.eval(dic.reparseVar(tokens.get(i+1)+"~"));
@@ -88,6 +95,12 @@ public class Parser {
 					System.out.println("INK ERROR: invalid if statement");
 					System.out.println("\tCannot compute: " + tokens.get(i+1));
 				}
+			} else if (tok.toLowerCase().compareTo("return") == 0) {
+				String funcName = tokens.get(tokens.size()-2);
+				Function func = dic.funcs.get(dic.findFunction(funcName.substring(1, funcName.length()-1)));
+				System.out.println(func);
+				func.setValue(tokens.get(i+1));
+				System.out.println(func);
 			}
 			i++;
 		}

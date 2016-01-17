@@ -1,0 +1,4 @@
+var bob = 1
+var num = 1
+bob = 3+bob~
+print bob

@@ -1,0 +1,28 @@
+import java.util.ArrayList;
+import javax.script.ScriptException;
+
+public class Variable {
+	
+	private String name;
+	private Object value;
+	private Dictionary dic;
+	
+	public Variable(String name, Object value) {
+		super();
+		this.name = name;
+		setValue(value);
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Object getValue() {
+		return value;
+	}
+
+	public void setValue(Object value) throws ScriptException {
+		System.out.println(value);
+		this.value = dic.eval(dic.reparseVar(value.toString())+"~");
+	}
+}
