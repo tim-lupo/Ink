@@ -6,7 +6,7 @@ public class Driver {
 	 * TODO:
 	 * -Add for/while
 	 * -Arrays
-	 * -Comments
+	 * -Add functions
 	 * 
 	 * two bugs:
 	 * -nested else if doesnt work

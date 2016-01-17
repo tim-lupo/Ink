@@ -146,7 +146,6 @@ public class Dictionary {
 	}
 	
 	public static void reparse (ArrayList<String> tokens) throws ScriptException {
-		System.out.println(tokens);
 		int i = 0; //position of index
 		for (String token : tokens) { //loop through the tokens
 			String tok = token.replace("\t", "");

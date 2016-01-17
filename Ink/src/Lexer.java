@@ -15,11 +15,11 @@ public class Lexer {
 		boolean isQuot = false;
 		boolean isMath = false;
 		boolean isBracket = false;
+		boolean isComment = false;
 		int numBracket = 0;
 		
 		for (int i=0; i<toklist.length; i++) {
 			char tok = toklist[i];
-			//System.out.println(toks);
 			if (tok == '(') {
 				isPara = true;
 			} else if (tok == ')') {
@@ -27,16 +27,22 @@ public class Lexer {
 			} else if (tok == '"') {
 				if (isQuot == false) { isQuot = true; }
 				else { isQuot = false; }
-			} if (tok == '{') {
+			} if (tok == '{' && !isComment) {
 				if (!isBracket)
 					if (toks != "") { tokens.add(toks); toks = ""; }
 				isBracket = true;
 				numBracket += 1;
-			} else if (tok == '}') {
+			} else if (tok == '}' && !isComment) {
 				numBracket -= 1;
+			} else if (tok == '/' && toklist[i+1] == '/') {
+				isComment = true;
+			} else if (tok == '~') {
+				isComment = false;
 			}
 			
-			if (isBracket == true) {
+			
+			if (isComment) {}
+			else if (isBracket == true) {
 				toks += tok;
 			} else if ((tok == '=')) { 
 				if (toklist[i+1]=='=' || toklist[i-1]=='=' || toklist[i+1]=='!' || toklist[i-1]=='!') {
